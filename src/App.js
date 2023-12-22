@@ -66,13 +66,17 @@ function App() {
               ></FileUpload>
             </div>
             <div class="image-vector"></div>
-            <div class="arrow">
-              <span></span>
-              <span></span>
-            </div>
+            <a href="#display">
+              <div class="arrow">
+                <span></span>
+                <span></span>
+              </div>
+            </a>
           </div>
         </div>
-        <Display contract={contract} account={account}></Display>
+        <div id="display">
+          <Display contract={contract} account={account}></Display>
+        </div>
       </div>
     </>
   );

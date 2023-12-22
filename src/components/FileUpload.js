@@ -53,7 +53,10 @@ const FileUpload = ({ contract, account, provider }) => {
   return (
     <div className="top">
       <div style={{ marginBottom: "20px" }}>
-        Select an image to store permanently
+        Select an image to store permanently{" "}
+        <span style={{ color: "#666660" }}>
+          (Please switch to Goerli testnet)
+        </span>
       </div>
       <form className="form" onSubmit={handleSubmit}>
         <span className="textArea">{fileName}</span>
