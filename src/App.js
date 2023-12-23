@@ -11,42 +11,81 @@ function App() {
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-
+  const [initiateConnection, setInitiateConnection] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const loadProvider = async () => {
-      if (provider) {
+    const connectMetaMask = async () => {
+      try {
+        setIsLoading(true);
+        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         window.ethereum.on("chainChanged", () => {
           window.location.reload();
         });
         window.ethereum.on("accountsChanged", () => {
+          const [address] = account;
+          setAccount(address);
+        });
+        window.ethereum.on("disconnect", (error) => {
           window.location.reload();
         });
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
+        await newProvider.send("eth_requestAccounts", []);
+        const signer = newProvider.getSigner();
         const address = await signer.getAddress();
         setAccount(address);
         let contractAddress = "0x29d10b3a8d20206019b40276255103b5197835e7";
-        const contract = new ethers.Contract(contractAddress, abi.abi, signer);
-        //console.log(contract);
-        setContract(contract);
-        setProvider(provider);
-      } else {
-        console.error("Metamask is not installed");
+        const newContract = new ethers.Contract(
+          contractAddress,
+          abi.abi,
+          signer
+        );
+        setContract(newContract);
+        setProvider(newProvider);
+      } catch (error) {
+        console.error("Error connecting to MetaMask:", error.message);
+      } finally {
+        setIsLoading(false);
+        // if (initiateConnection) {
+        setInitiateConnection(false);
+        // }
       }
     };
-    provider && loadProvider();
-  }, []);
 
-  const notify = () => {
-    toast.success("Success Notification !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    if (initiateConnection) {
+      connectMetaMask();
+    }
+  }, [initiateConnection]);
+  useEffect(() => {
+    console.log("accounnt", account);
+  }, [account]);
+
+  const disconnectMetaMask = async () => {
+    try {
+      // await window.ethereum.disconnect();
+      await provider.send("eth_requestAccounts", []);
+      setAccount("");
+      setProvider(null);
+      setInitiateConnection(false);
+    } catch (error) {
+      console.error("Error disconnecting from MetaMask:", error.message);
+    }
   };
   return (
     <>
       <div className="App">
+        <nav>
+          {account ? (
+            <>
+              <button onClick={disconnectMetaMask}>Disconnect Wallet</button>
+            </>
+          ) : (
+            <button
+              onClick={() => setInitiateConnection(true)}
+              disabled={isLoading}
+            >
+              {isLoading ? "Connecting..." : "Connect MetaMask"}
+            </button>
+          )}
+        </nav>
         <div
           style={{
             height: "100vh",
