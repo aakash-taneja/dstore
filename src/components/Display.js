@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Display.css";
 import Modal from "./Modal";
+import { toast } from "react-toastify";
 const Display = ({ contract, account }) => {
   const [data, setData] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +23,9 @@ const Display = ({ contract, account }) => {
         console.log(account, dataArray);
       }
     } catch (e) {
-      alert("You don't have access", e);
+      toast.error("You don't have access", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
     const isEmpty = Object.keys(dataArray).length === 0;
 
@@ -41,7 +44,12 @@ const Display = ({ contract, account }) => {
       });
       setData(images);
     } else {
-      alert("No image to display");
+      toast.success("No image to display", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      toast.success("Please upload image to share", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
   return (

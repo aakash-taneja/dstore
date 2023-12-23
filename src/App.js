@@ -4,7 +4,8 @@ import FileUpload from "./components/FileUpload";
 import Display from "./components/Display";
 import "./App.css";
 import { ethers } from "ethers";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [account, setAccount] = useState("");
@@ -37,6 +38,12 @@ function App() {
     };
     provider && loadProvider();
   }, []);
+
+  const notify = () => {
+    toast.success("Success Notification !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
   return (
     <>
       <div className="App">
@@ -78,6 +85,8 @@ function App() {
         <div id="display">
           <Display contract={contract} account={account}></Display>
         </div>
+        {/* <button onClick={notify}>Notify</button> */}
+        <ToastContainer />
         {/* <ToastContainer /> */}
       </div>
     </>

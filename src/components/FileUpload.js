@@ -32,14 +32,18 @@ const FileUpload = ({ contract, account, provider }) => {
           type: "success",
         });
         await contract.add(account, ImgHash);
-        console.log("Successfully Image Uploaded");
+        toast.success("Successfully Image Uploaded", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         setFileName("No image selected");
         setFile(null);
       } catch (e) {
-        alert("Unable to upload image to Pinata");
+        toast.error("Unable to upload image", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     }
-    // alert("Successfully Image Uploaded");
+
     setFileName("No image selected");
     setFile(null);
     return e;
@@ -58,14 +62,7 @@ const FileUpload = ({ contract, account, provider }) => {
     // const res = await handleSubmit(e);
     // console.log("submit done", res);
   };
-  const handleclick = () => {
-    console.log("clicked");
-    toast("Wait for txn to complete", {
-      position: "top-right",
-      autoClose: 5000,
-      type: "success",
-    });
-  };
+
   return (
     <div className="top">
       <div style={{ marginBottom: "20px" }}>
