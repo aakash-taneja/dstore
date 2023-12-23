@@ -4,6 +4,7 @@ import FileUpload from "./components/FileUpload";
 import Display from "./components/Display";
 import "./App.css";
 import { ethers } from "ethers";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [account, setAccount] = useState("");
@@ -77,6 +78,7 @@ function App() {
         <div id="display">
           <Display contract={contract} account={account}></Display>
         </div>
+        {/* <ToastContainer /> */}
       </div>
     </>
   );

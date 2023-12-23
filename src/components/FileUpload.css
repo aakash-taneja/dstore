@@ -25,7 +25,7 @@ input[type="file"] {
 .textArea {
   color: black;
   margin-bottom: 10px;
-  width: 400px;
+  /* width: 400px; */
 }
 
 .upload {
@@ -112,8 +112,9 @@ div {
 }
 .form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   border: 2px dashed #fa5c5c6e;
   background: #fff;
   padding: 10px;

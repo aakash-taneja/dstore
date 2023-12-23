@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import "./FileUpload.css";
+import { toast } from "react-toastify";
+
 const FileUpload = ({ contract, account, provider }) => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("No image selected");
@@ -24,6 +26,11 @@ const FileUpload = ({ contract, account, provider }) => {
           }
         );
         const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
+        toast("Wait for txn to complete", {
+          position: "top-right",
+          autoClose: 5000,
+          type: "success",
+        });
         await contract.add(account, ImgHash);
         console.log("Successfully Image Uploaded");
         setFileName("No image selected");
@@ -35,6 +42,7 @@ const FileUpload = ({ contract, account, provider }) => {
     // alert("Successfully Image Uploaded");
     setFileName("No image selected");
     setFile(null);
+    return e;
   };
   const retrieveFile = async (e) => {
     const data = e.target.files[0]; //files array of files object
@@ -46,9 +54,17 @@ const FileUpload = ({ contract, account, provider }) => {
     };
     setFileName(e.target.files[0].name);
     e.preventDefault();
-    console.log("calling submit");
-    await handleSubmit(e);
-    console.log("submit done");
+    // console.log("calling submit");
+    // const res = await handleSubmit(e);
+    // console.log("submit done", res);
+  };
+  const handleclick = () => {
+    console.log("clicked");
+    toast("Wait for txn to complete", {
+      position: "top-right",
+      autoClose: 5000,
+      type: "success",
+    });
   };
   return (
     <div className="top">
@@ -58,21 +74,26 @@ const FileUpload = ({ contract, account, provider }) => {
           (Please switch to Goerli testnet)
         </span>
       </div>
+      {/* <div onClick={handleclick}>toast</div> */}
       <form className="form" onSubmit={handleSubmit}>
-        <span className="textArea">{fileName}</span>
-        <label htmlFor="file-upload" className="choose">
-          Choose Image
-        </label>
-        <input
-          disabled={!account}
-          type="file"
-          id="file-upload"
-          name="data"
-          onChange={retrieveFile}
-        />
-        {/* <button type="submit" className="upload" disabled={!file}>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "20rem" }}
+        >
+          <span className="textArea">{fileName}</span>
+          <label htmlFor="file-upload" className="choose">
+            Choose Image
+          </label>
+          <input
+            disabled={!account}
+            type="file"
+            id="file-upload"
+            name="data"
+            onChange={retrieveFile}
+          />
+        </div>
+        <button type="submit" className="upload" disabled={!file}>
           Upload File
-        </button> */}
+        </button>
       </form>
     </div>
   );
