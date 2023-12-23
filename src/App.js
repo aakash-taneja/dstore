@@ -77,7 +77,8 @@ function App() {
     <>
       <div className="App">
         <nav>
-          <img src="./dstore01.png" height={"30px"} />
+          {/* <img src="../public/dstore01.png"} /> */}
+          <div className="logo"></div>
           {account ? (
             <>
               <button class="button" onClick={disconnectMetaMask}>
