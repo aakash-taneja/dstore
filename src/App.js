@@ -69,6 +69,10 @@ function App() {
       console.error("Error disconnecting from MetaMask:", error.message);
     }
   };
+  const handleScroll = () => {
+    const displaySection = document.getElementById("display");
+    displaySection.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <>
       <div className="App">
@@ -123,12 +127,12 @@ function App() {
               ></FileUpload>
             </div>
             <div class="image-vector"></div>
-            <a href="#display">
+            <div onClick={handleScroll}>
               <div class="arrow">
                 <span></span>
                 <span></span>
               </div>
-            </a>
+            </div>
           </div>
         </div>
         <div id="display">
