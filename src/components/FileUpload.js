@@ -67,9 +67,6 @@ const FileUpload = ({ contract, account, provider }) => {
     <div className="top">
       <div style={{ marginBottom: "20px" }}>
         Select an image to store permanently{" "}
-        <span style={{ color: "#666660" }}>
-          (Please switch to Goerli testnet)
-        </span>
       </div>
       {/* <div onClick={handleclick}>toast</div> */}
       <form className="form" onSubmit={handleSubmit}>

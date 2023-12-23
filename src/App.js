@@ -101,6 +101,12 @@ function App() {
           <h1 style={{ color: "white" }}>
             D-Store : Decentralized Image Storage and distribution
           </h1>
+          <h4
+            style={{ color: "white", marginBottom: "10px", color: "#f6f6f6" }}
+          >
+            To use the dApp - Connect your wallet, Switch to Goerli testnet and
+            add test ethers form <a href="https://goerlifaucet.com/"> here</a>
+          </h4>
           <div class="bg"></div>
           <div class="bg bg2"></div>
           <div class="bg bg3"></div>
