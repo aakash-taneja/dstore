@@ -202,3 +202,29 @@ p {
     transform: rotate(45deg) translate(20px, 20px);
   }
 }
+
+nav {
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5px 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.button {
+  background-color: initial;
+  background: #f99191;
+  border-radius: 6px;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  /* margin-right: 10px; */
+  /* padding-bottom: 10px; */
+}
+.button:hover {
+  box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}

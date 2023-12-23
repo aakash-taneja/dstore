@@ -73,12 +73,16 @@ function App() {
     <>
       <div className="App">
         <nav>
+          <img src="./dstore01.png" height={"30px"} />
           {account ? (
             <>
-              <button onClick={disconnectMetaMask}>Disconnect Wallet</button>
+              <button class="button" onClick={disconnectMetaMask}>
+                Disconnect Wallet
+              </button>
             </>
           ) : (
             <button
+              class="button"
               onClick={() => setInitiateConnection(true)}
               disabled={isLoading}
             >
