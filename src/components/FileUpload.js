@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./FileUpload.css";
 import { toast } from "react-toastify";
+import { deploytoLightHouse, displayImage } from "./lightHouseStorage";
 
 const FileUpload = ({ contract, account, provider }) => {
   const [file, setFile] = useState(null);
@@ -11,21 +12,28 @@ const FileUpload = ({ contract, account, provider }) => {
     e.preventDefault();
     if (file) {
       try {
-        const formData = new FormData();
-        formData.append("file", file);
+        // const formData = new FormData();
+        // formData.append("file", file);
+        const resFile = await deploytoLightHouse(file, (progressData) => {
+          let percentageDone =
+            100 -
+            Number((progressData?.total / progressData?.uploaded)?.toFixed(2));
+          console.log("percentage done: ", percentageDone);
+          // setIpfsLoading(percentageDone);
+        });
 
-        const resFile = await axios.post(
-          "https://api.pinata.cloud/pinning/pinFileToIPFS",
-          formData,
-          {
-            maxBodyLength: "Infinity",
-            headers: {
-              "Content-Type": `multipart/form-data`,
-              Authorization: `Bearer ${JWT}`,
-            },
-          }
-        );
-        const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
+        // const resFile = await axios.post(
+        //   "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        //   formData,
+        //   {
+        //     maxBodyLength: "Infinity",
+        //     headers: {
+        //       "Content-Type": `multipart/form-data`,
+        //       Authorization: `Bearer ${JWT}`,
+        //     },
+        //   }
+        // );
+        const ImgHash = displayImage(resFile);
         toast("Wait for txn to complete", {
           position: "top-right",
           autoClose: 5000,
@@ -38,6 +46,7 @@ const FileUpload = ({ contract, account, provider }) => {
         setFileName("No image selected");
         setFile(null);
       } catch (e) {
+        console.log(e);
         toast.error("Unable to upload image", {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -54,7 +63,7 @@ const FileUpload = ({ contract, account, provider }) => {
     const reader = new window.FileReader();
     reader.readAsArrayBuffer(data);
     reader.onloadend = () => {
-      setFile(e.target.files[0]);
+      setFile(e.target.files);
     };
     setFileName(e.target.files[0].name);
     e.preventDefault();
